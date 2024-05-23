@@ -1,37 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { TrpcService } from './trpc.service';
-import { z } from 'zod';
+import { GoogleDriveService } from '@server/google_drive_one_drive/google_drive_one_drive.service';
+import { MicrosoftDriveService } from '@server/microsoft_drive_one_drive/microsoft_drive_one_drive.service';
 
 @Injectable()
 export class TrpcRouter {
-  constructor(private readonly trpcService: TrpcService) {}
+  constructor(
+    private readonly trpcService: TrpcService,
+    private readonly googleService: GoogleDriveService,
+    private readonly microsoftService: MicrosoftDriveService,
+  ) {}
 
-  appRouter = this.trpcService.trpc.router({
-    hello: this.trpcService.trpc.procedure
-      .input(
-        z.object({
-          name: z.string().optional(),
-        }),
-      )
-      .query(({ input }) => {
-        const { name } = input;
-        console.log('Called');
-        return {
-          greeting: `Hello ${name ? name : 'No Name'}`,
-        };
-      }),
-  });
-
-  // async applyMiddleware(app:INestApplication){
-  //     console.log("Middleware called")
-  //     app.use('/trpc',
-  //     trpcExpress
-  //         .createExpressMiddleware({ router: this.appRouter, onError:(error)=>console.log(error) , middleware(req, res, next) {
-  //             console.log(req.body, );
-  //             next()
-  //         }, }));
-
-  // }
+  appRouter = this.trpcService.trpc.router({});
 }
 
 export type AppRouter = TrpcRouter['appRouter'];
