@@ -6,6 +6,8 @@ import { MicrosoftDriveModule } from '@server/microsoft_drive_one_drive/microsof
 import { AppleDriveModule } from '@server/apple_drive_one_drive/apple_drive_one_drive.module';
 import { DropboxDriveModule } from '@server/dropbox_drive_one_drive/dropbox_drive_one_drive.module';
 import { MegaDriveModule } from '@server/mega_drive_one_drive/mega_drive_one_drive.module';
+import { DBModule } from '@server/DB/DB.module';
+import { DBService } from '@server/DB/DB.service';
 
 @Module({
   imports: [
@@ -14,6 +16,7 @@ import { MegaDriveModule } from '@server/mega_drive_one_drive/mega_drive_one_dri
     AppleDriveModule,
     DropboxDriveModule,
     MegaDriveModule,
+    DBModule,
   ],
   providers: [TrpcService, TrpcRouter],
 })

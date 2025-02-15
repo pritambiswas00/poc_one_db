@@ -1,9 +1,22 @@
-import { Module } from '@nestjs/common';
+import { Module, LoggerService, Logger } from '@nestjs/common';
 import { DBService } from './DB.service';
-import { DBUser } from './DB.user.service';
+import { KnexModule } from 'nest-knexjs';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
-  exports: [DBUser],
-  providers: [DBService, DBUser],
+  imports: [
+    KnexModule.forRootAsync({
+      useFactory: (config: ConfigService) => ({
+        config: {
+          client: 'pg',
+          useNullAsDefault: true,
+          debug: true,
+          connection: config.get('DB_URI'),
+        },
+      }),
+    }),
+  ],
+  exports: [DBService],
+  providers: [DBService, Logger],
 })
 export class DBModule {}

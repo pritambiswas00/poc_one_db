@@ -11,5 +11,5 @@ export interface IUser {
 export interface IAccount {
   id: number;
   accountType: DataProvider;
-  userId: number;
+  user_id: IUser;
 }
